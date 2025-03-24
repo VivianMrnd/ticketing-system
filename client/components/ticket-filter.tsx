@@ -1,8 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { Search, Filter } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface TicketFilterProps {
   activeFilter: string
@@ -13,30 +13,48 @@ interface TicketFilterProps {
 
 export function TicketFilter({ activeFilter, setActiveFilter, searchQuery, setSearchQuery }: TicketFilterProps) {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-      <div className="flex items-center space-x-2">
-        {["all", "open", "in-progress", "closed"].map((status) => (
-          <Button
-            key={status}
-            variant={activeFilter === status ? "default" : "outline"}
-            size="sm"
-            onClick={() => setActiveFilter(status)}
-          >
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </Button>
-        ))}
-      </div>
-
-      <div className="relative w-full sm:w-auto">
+    <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="relative flex-1">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
-          type="search"
           placeholder="Search tickets..."
-          className="w-full sm:w-[250px] pl-8"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
         />
+      </div>
+      <div className="flex gap-2">
+        <Button
+          variant={activeFilter === "all" ? "default" : "outline"}
+          onClick={() => setActiveFilter("all")}
+          className={activeFilter === "all" ? "bg-primary text-primary-foreground" : ""}
+        >
+          <Filter className="mr-2 h-4 w-4" />
+          All
+        </Button>
+        <Button
+          variant={activeFilter === "open" ? "default" : "outline"}
+          onClick={() => setActiveFilter("open")}
+          className={activeFilter === "open" ? "bg-blue-500 hover:bg-blue-600" : ""}
+        >
+          Open
+        </Button>
+        <Button
+          variant={activeFilter === "in-progress" ? "default" : "outline"}
+          onClick={() => setActiveFilter("in-progress")}
+          className={activeFilter === "in-progress" ? "bg-amber-500 hover:bg-amber-600 text-white" : ""}
+        >
+          In Progress
+        </Button>
+        <Button
+          variant={activeFilter === "closed" ? "default" : "outline"}
+          onClick={() => setActiveFilter("closed")}
+          className={activeFilter === "closed" ? "border-green-500 text-green-600" : ""}
+        >
+          Closed
+        </Button>
       </div>
     </div>
   )
 }
+

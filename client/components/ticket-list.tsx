@@ -6,7 +6,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
-import { MoreHorizontal, Edit, Trash2 } from "lucide-react"
+import {
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  AlertCircle,
+  Clock,
+  CheckCircle2,
+  AlertTriangle,
+  CheckCircle,
+} from "lucide-react"
 import type { Ticket } from "@/lib/types"
 import { TicketEditDialog } from "./ticket-edit-dialog"
 import { TicketDeleteDialog } from "./ticket-delete-dialog"
@@ -25,26 +34,80 @@ export function TicketList({ tickets, isLoading, onUpdate, onDelete }: TicketLis
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "open":
-        return <Badge variant="default">Open</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <AlertCircle className="h-4 w-4 text-blue-500" />
+            <Badge variant="default" className="bg-blue-500 hover:bg-blue-600">
+              Open
+            </Badge>
+          </div>
+        )
       case "in-progress":
-        return <Badge variant="secondary">In Progress</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-4 w-4 text-amber-500" />
+            <Badge variant="secondary" className="bg-amber-500 text-white hover:bg-amber-600">
+              In Progress
+            </Badge>
+          </div>
+        )
       case "closed":
-        return <Badge variant="outline">Closed</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <CheckCircle2 className="h-4 w-4 text-green-500" />
+            <Badge variant="outline" className="border-green-500 text-green-600 dark:text-green-400">
+              Closed
+            </Badge>
+          </div>
+        )
       default:
-        return <Badge variant="default">Open</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <AlertCircle className="h-4 w-4 text-blue-500" />
+            <Badge variant="default" className="bg-blue-500 hover:bg-blue-600">
+              Open
+            </Badge>
+          </div>
+        )
     }
   }
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case "low":
-        return <Badge variant="secondary">Low</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <CheckCircle className="h-4 w-4 text-teal-500" />
+            <Badge variant="secondary" className="bg-teal-500 text-white hover:bg-teal-600">
+              Low
+            </Badge>
+          </div>
+        )
       case "medium":
-        return <Badge variant="default">Medium</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <AlertCircle className="h-4 w-4 text-purple-500" />
+            <Badge variant="default" className="bg-purple-500 hover:bg-purple-600">
+              Medium
+            </Badge>
+          </div>
+        )
       case "high":
-        return <Badge className="bg-red-500 hover:bg-red-600">High</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <AlertTriangle className="h-4 w-4 text-red-500" />
+            <Badge className="bg-red-500 hover:bg-red-600">High</Badge>
+          </div>
+        )
       default:
-        return <Badge variant="secondary">Low</Badge>
+        return (
+          <div className="flex items-center gap-1.5">
+            <CheckCircle className="h-4 w-4 text-teal-500" />
+            <Badge variant="secondary" className="bg-teal-500 text-white hover:bg-teal-600">
+              Low
+            </Badge>
+          </div>
+        )
     }
   }
 
@@ -62,7 +125,8 @@ export function TicketList({ tickets, isLoading, onUpdate, onDelete }: TicketLis
 
   if (tickets.length === 0) {
     return (
-      <div className="text-center py-10">
+      <div className="text-center py-10 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
+        <AlertCircle className="h-12 w-12 text-slate-400 mx-auto mb-3" />
         <h3 className="text-lg font-medium">No tickets found</h3>
         <p className="text-muted-foreground">Create a new ticket to get started.</p>
       </div>
@@ -71,9 +135,9 @@ export function TicketList({ tickets, isLoading, onUpdate, onDelete }: TicketLis
 
   return (
     <>
-      <div className="rounded-md border">
+      <div className="rounded-md border border-slate-200 dark:border-slate-700 overflow-hidden">
         <Table>
-          <TableHeader>
+          <TableHeader className="bg-slate-50 dark:bg-slate-800/50">
             <TableRow>
               <TableHead>Ticket #</TableHead>
               <TableHead>Title</TableHead>
@@ -87,7 +151,7 @@ export function TicketList({ tickets, isLoading, onUpdate, onDelete }: TicketLis
           </TableHeader>
           <TableBody>
             {tickets.map((ticket) => (
-              <TableRow key={ticket._id}>
+              <TableRow key={ticket._id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                 <TableCell className="font-medium">{ticket.ticket}</TableCell>
                 <TableCell className="font-medium">{ticket.title}</TableCell>
                 <TableCell className="font-medium">{ticket.user}</TableCell>
