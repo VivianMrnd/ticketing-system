@@ -35,4 +35,4 @@ const ticketSchema = new mongoose.Schema({
 
 const ticketList = mongoose.model("Ticket", ticketSchema);
 
-module.exports = ticketList;
+export default ticketList;

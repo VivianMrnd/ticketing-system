@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function crudData(method?: string, data?: any, id?: string) {
   try {
-    const url = id ? `${API_BASE_URL}/ticket/${id}` : `${API_BASE_URL}/ticket`;
+    const url = id ? `${API_BASE_URL}/ticket?id=${id}` : `${API_BASE_URL}/ticket`;
     const options: RequestInit = {
       method: method || "GET", 
       ...(method && method !== "GET" ? {
